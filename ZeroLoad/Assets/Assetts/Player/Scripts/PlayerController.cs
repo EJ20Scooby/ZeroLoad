@@ -6,7 +6,7 @@ public class PlayerController : MonoBehaviour
     private float horizontal;
     private float speed = 8.0f;
     private float jumpPower = 16.0f;
-    private bool isFacingRight = true;
+    //private bool isFacingRight = true;
 
     [SerializeField] private Rigidbody2D rb;
     [SerializeField] private Transform groundCheck;
