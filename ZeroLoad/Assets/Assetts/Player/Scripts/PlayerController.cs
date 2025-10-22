@@ -26,25 +26,9 @@ public class PlayerController : MonoBehaviour
 
     void Update()
     {
-        horizontal = Input.GetAxis("Horizontal");
-
-        if (Input.GetButtonDown("Jump") && IsGrounded())
-        {
-            rb.linearVelocity = new Vector2(rb.linearVelocity.x, jumpPower); 
-        }
-
-        if (Input.GetButtonUp("Jump") && rb.linearVelocity.y > 0f)
-        {
-            rb.linearVelocity = new Vector2(rb.linearVelocity.x, rb.linearVelocity.y * 0.5f);
-        }
-
+        GetInput();
         WallSlide();
-        WallJump();
-
-        if(!isWallJumping)
-        {
-            Flip();
-        }
+        WallJump();       
     }
 
     private void FixedUpdate()
@@ -52,6 +36,21 @@ public class PlayerController : MonoBehaviour
         if (!isWallJumping)
         {
             rb.linearVelocity = new Vector2(horizontal * speed, rb.linearVelocity.y);
+        }
+    }
+
+    private void GetInput()
+    {
+        horizontal = Input.GetAxis("Horizontal");
+
+        if (Input.GetButtonDown("Jump") && IsGrounded())
+        {
+            rb.linearVelocity = new Vector2(rb.linearVelocity.x, jumpPower);
+        }
+
+        if (Input.GetButtonUp("Jump") && rb.linearVelocity.y > 0f)
+        {
+            rb.linearVelocity = new Vector2(rb.linearVelocity.x, rb.linearVelocity.y * 0.5f);
         }
     }
 
@@ -113,16 +112,5 @@ public class PlayerController : MonoBehaviour
     private void StopWallJumping()
     {
         isWallJumping = false;
-    }    
-
-    private void Flip()
-    {
-        if (isFacingRight && horizontal < 0.0f || !isFacingRight && horizontal > 0.0f)
-        {
-            isFacingRight = !isFacingRight;
-            Vector3 localScale = transform.localScale;
-            localScale.x *= -1.0f;
-            transform.localScale = localScale;
-        }
-    }
+    }        
 }
